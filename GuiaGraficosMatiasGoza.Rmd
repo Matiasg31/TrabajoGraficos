@@ -1,0 +1,204 @@
+---
+title: "graficos"
+author: "Matias Goza"
+date: "12-08-2020"
+output: html_document
+---
+
+#Instalar librerias ggplot2
+
+```{r warning=FALSE, message=FALSE}
+install.packages("ggplot2")
+library("ggplot2")
+```
+
+```{r}
+data.frame(fullDatos)
+```
+
+```{r}
+fullDatos$categoria
+```
+
+
+```{r}
+fullDatos$comuna
+```
+##1.Genere un filtro en las variables que le llamen la atención para realizar un estudio con los
+#siguientes puntos.
+##2.Analice la información entregada y redacte un informe respecto a estos datos, a través de
+#visualizaciones (Analisis debajo de cada grafico).
+
+###Cantidad de avisos por Categoria
+
+```{r, fig.height=20, fig.width=20}
+ggplot(datafcomunas, aes(x = datafcomunas$Categorias))+
+ geom_bar()+
+  scale_x_discrete("Categorias")+
+  scale_y_continuous("Número por categoria")+
+  ggtitle(label = "Cantidad de avisos por cada Categoria")+
+  coord_flip()+
+  geom_text(stat= 'count', hjust = 0, vjust = 0, position = position_dodge(0.9), aes(x = datafcomunas$Categorias, label = stat(count)))
+```
+#Si visualizamos el grafico anterior, podemos sacar conclusiones acerca de que categorias son las que cuentan con más cantidad de avisos, dando un panorama acerca de cuáles son las preferencias al momento de vender, y por cierto da cabida a la idea de que son los productos que más se compran, por lo cual dan lugar a tener una mayor oferta. Dentro de las categorias que más avisos tienen están las siguientes: "Salud y belleza" (16), "Accesorios y piezas para vehículos"(14), "Moda y vestuario" (11), "Audio, TV, video y fotografía" (9) y "Jueguetes", "Electrodomesticos (8). Dentro de las 5 categorias con mayor cantidad de avisos podemos destacar que dos de ellas guardan relacion a topicos relacionados al cuidado personal, como son salud y bellaza y moda y vestuario, esto dando una muestra de cual es la preferencia a la hora y vender y comprar a traves de la plataforma. 
+
+
+###Cantidad de avisos por cada Comuna.
+```{r, fig.height=20, fig.width=20}
+ggplot(datafcomunas, aes(x = datafcomunas$Comunas))+
+ geom_bar()+
+  scale_x_discrete("Comunas")+
+  scale_y_continuous("numero por comuna")+
+  coord_flip()+
+  geom_text(stat= 'count', hjust = 0, vjust = 0, position = position_dodge(0.9), aes(x = datafcomunas$Comunas, label = stat(count)))
+```
+#Realizando un análisis similar al anterior, si llevamos el número de avisos según la Comuna, podemos complementar el análisis de los primeros gráficos que entregaba las comunas con mayor variedad de categorias. Si vemos las 3 comunas con mayor cantidad de avisos, destacan la comuna de Santiago (21), Providencia (19) y  Maipú (14).
+
+###Categorias por cada Comuna.
+
+```{r,fig.height=20, fig.width=20}
+ggplot(fullDatos,aes(x = fullDatos$comuna, fill = categoria))+
+  geom_bar(stat= 'count')+
+  scale_x_discrete(name = "Comuna", lim = )+
+  scale_y_discrete(name = "Categorias" )+
+  ggtitle( label = "Categoria por comuna")+
+  coord_flip()
+
+```
+#El grafico anterior representa que categorias de avisos tiene cada comuna, el cual muestra que la tendencia de las comunas ronda entre las 1 y 4 categorias, exceptuando ciertas comunas que escapan de esta tendencia,por ejemplo Santiago, Las Condes, Maipu y San Miguel, las cuales cuentan con una gran diversidad de categorias. Ademas, es posible visualizar que tanto la comuna de Santiago como Las condes cuentan con una gran diversidad de avisos, abarcando diferentes categorias. A continuación se individualizaran las comunas que cuentan con un mayor número de categorias, para poder visualizar como es la oferta de avisos existente en ellas.
+
+###Comunas con más diversidad de categorias.
+##Santiago
+```{r, fig.height=8, fig.width=8}
+ggplot(fullDatos,aes(x = fullDatos$comuna, fill = categoria))+
+  geom_bar(position = "dodge")+
+  scale_x_discrete(name = "Comuna", lim = "Santiago")+
+  scale_y_discrete(name = "Categorias" )+
+  ggtitle( label = "Categoria por comuna")
+
+  
+```
+#La comuna de Santiago, siendo la con mayor diversidad de categorias y la mayor cantidad de avisos, cuenta con 11 categorias diferentes, donde las con mayor cantidad de avisos de ellas son "Accesorios y piezas para vehiculos", la cual es seguida por otras 4 categorias que cuentan con la misma proporción("Arriendo - Departamento", "Hobbies y outdoor, "Moda y vestuario" y "Ofertas de empleo"), siendo posible destacar que son categorias con poca relación entre ellas, lo que destaca la gran variedad en la oferta de avisos en la comuna de Santiago.
+
+##Providencia
+
+```{r,fig.height=8, fig.width=8}
+ggplot(fullDatos,aes(x = fullDatos$comuna, fill = categoria))+
+  geom_bar(position = "dodge")+
+  scale_x_discrete(name = "Comuna", lim = "Providencia")+
+  scale_y_discrete(name = "Categorias" )+
+  ggtitle( label = "Categoria por comuna")
+
+```
+#La comuna de Providencia cuenta con una oferta de avisos de 7 categorias diferentes, donde su oferta se caracteriza por estar dominada por la categoria "Salud y belleza", la cual solo es seguida por "Jardin, herramientas y exteriores" y "Moda y vestuario" las cuales la siguen en una proporción menor, lo que es un indicio de una oferta de avisos con una alta concentración. Dentro de las categorias existentes puede verse una diversidad de topicos en los avisos, lo cual muestra que a pesar de la concentracion existe una oferta de avisos amplia a nivel de variedad.
+
+##Maipú
+
+```{r,fig.height=8, fig.width=8}
+ggplot(fullDatos,aes(x = fullDatos$comuna, fill = categoria))+
+  geom_bar(position = "dodge")+
+  scale_x_discrete(name = "Comuna", lim = "Maipú")+
+  scale_y_discrete(name = "Categorias" )+
+  ggtitle( label = "Categoria por comuna")
+
+
+```
+#La comuna de Maipú cuenta con una diversidad de categorias y avisos variada, bajo la cual cuentan con 8 categorias diferentes, entre ellas se puede visualizar 1 categoris dominante como es "Juguetes", teniendo una gran concentración de la totalidad de avisos de la comuna, donde solo es cercana a su cantidad de avisos, en menor medida, la categoria "Audio, TV, video y fotografia", viendo al igual que en Santiago una oferta de avisos variada, la cual tiene una gran concentración de la categoria mencionada, además de contar con categorias en gran parte relacionadas a productos tecnologicos o del rubro autromotriz.
+
+
+```{r}
+#paquete dplyr
+install.packages("dplyr")
+library("dplyr")
+```
+
+
+```{r}
+Comunas <- c(fullDatos$comuna)
+Categorias <- c(fullDatos$categoria)
+datafcomunas <- data.frame(Comunas, Categorias)
+```
+
+
+##3.Dentro del data frame hay valores “NA”, para cada uno de estos casos describa por qué
+#sucede y grafíquelo.
+
+#Datos NA en variable comuna
+```{r}
+is.na(fullDatos$comuna)
+sum(is.na(fullDatos$comuna))
+
+```
+#Datos Na en variable categorias
+```{r}
+is.na(fullDatos$categoria)
+sum(is.na(fullDatos$categoria))
+```
+#Datos NA en variable precio
+```{r}
+is.na(fullDatos$precio)
+sum(is.na(fullDatos$precio))
+```
+
+#Datos NA en variable tiponegocio
+```{r}
+is.na(fullDatos$tiponegocio)
+sum(is.na(fullDatos$tiponegocio))
+```
+
+#Datos Na en variable aniousuarioyapo
+```{r}
+is.na(fullDatos$aniousuarioyapo)
+sum(is.na(fullDatos$aniousuarioyapo))
+```
+#Datos Na en Variable urlyapo
+```{r}
+is.na(fullDatos$urlyapo)
+sum(is.na(fullDatos$urlyapo))
+```
+
+#Si analizamos lo anterior, existe presencia de datos "NA" dentro de las variables "precio" (27),"tiponegocio" (14) y  "aniousuarioyapo" (2), entendiendo que estos son datos faltantes, podemos llegar a conclusiones que apuntan a la omisión de estos datos dentro del aviso por parte del usuario, esto relacionado a las variables "precio" y "tiponegocio", pero en la variable "aniousuarioyapo" puede deberse a otras razones, por las cuales al momento de extraer la información no existen ciertos datos y quedan asignados como "NA"
+
+##4.Busque la forma de guardar y cargar los datos obtenidos en un CSV.
+#Exportar en formato CSV
+
+```{r}
+write.table(fullDatos, file= "data_frame_yapo.csv", sep=",")
+```
+#Para poder guardar el data frame fullDatos en un archivo de formato .csv, se utilizó la funcion write.table, la cual permite que elegir que data frame se guardara, el nombre de esta y el formato que en este caso es .csv. El archivo finalmente se guarda en la carpeta seleccionada en R Studio.
+
+##Ejercicio Optativo: Corra cada una de las líneas y explique qué realizan todas las funciones utilizadas en el
+#siguiente código. Puede apoyarse ingresando a la página y hacer click en “Inspeccionar
+#elemento”.
+
+# fullDatos <- data.frame()
+#  for(numeroPagina in 1:3){
+#    readHtml <- read_html(paste("https://www.yapo.cl/region_metropolitana?ca=15_s&o=",numeroPagina,sep = ""))
+#    print(paste("Descargando pagina nro:",numeroPagina))
+#    nodeTabla <- html_nodes(readHtml, ".listing_thumbs")
+#    nodeTabla <- html_nodes(nodeTabla, ".title")
+#    linksProductos <- html_attr(nodeTabla,"href")
+    
+#    for (urlYapo in linksProductos) {
+#      htmlSeg <- read_html(urlYapo)
+#      
+#      print(paste("Descargando URL ==> ",urlYapo))
+      
+#      textoTipoAviso <- obtenerCategoria(htmlSeg)
+#      precio <- sacandoPrecio(htmlSeg)
+#      comuna <- obtenerComuna(htmlSeg)
+#      tipoNegocio <- obtenerTipoNegocio(htmlSeg)
+#      anioUsuarioyapo <- obtenerAnioUsuarioYapo(htmlSeg)
+#      publicacionesactivasusuarioyapo <- obtenerPublicacionesActivasUsuarioYapo(htmlSeg)
+#      publicacionestotalesusuarioyapo <- obtenerPublicacionesTotalesUsuarioYapo(htmlSeg)
+      
+#      fullDatos <- rbind(fullDatos,data.frame(comuna = comuna, categoria = textoTipoAviso, precio = precio,
+#                                              tiponegocio = tipoNegocio, aniousuarioyapo = anioUsuarioyapo,
+#                                              urlyapo = urlYapo ))
+#    }
+# }
+  
+#  View(fullDatos)
+
+#En las lineas anteriores se realizó un scraping de datos de la pagina Yapo, para lo cual en primer lugar se realiza un for que contiene un read_html, el que se utiliza para extraer la información del link que contiene el parentesis, para luego extraer ciertos datos como los titulos de la pagina y los links de los productos, extrayendo las referencias de estos ultimos. Luego existe otro for, el cual extrae las url de los links de los productos que se obtuvieron en el paso anterior, con esto puede extraer informacion de los avisos de los productos, informacion que en este caso es relativa a las categorias, precios, comunas, tipo de negocio y el año de creacion de la cuenta del usuario. Finalmente con toda esta informacion obtenida se crea un data frame el cual contendra toda esta informacion para poder ser utiliza en R de la manera que se estime conveniente.
+
